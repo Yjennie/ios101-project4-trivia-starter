@@ -7,9 +7,27 @@
 
 import Foundation
 
-struct TriviaQuestion {
+struct TriviaQuestion : Decodable {
   let category: String
+  let type: String
+  let difficulty: String
   let question: String
   let correctAnswer: String
   let incorrectAnswers: [String]
+}
+
+private enum CodingKeys: String, CodingKey {
+    case category, type, difficulty, question
+    case correctAnswer = "correct_answer"
+    case incorrectAnswers = "incorrect_answers"
+}
+
+struct ResponseObject: Decodable {
+    let response_code: Int
+    let results: [TriviaQuestion]
+    
+    private enum CodingKeys: String, CodingKey {
+        case response_code = "response_code"
+        case results = "results"
+    }
 }
